@@ -1,5 +1,12 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+from .models import Book
+
 
 def home(request):
-    return HttpResponse("Welcome to Booklib application")
+    books = Book.objects.all()
+    return render(request, 'library/home.html', {'books': books})
+
+
+def detail(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    return render(request, 'library/detail.html', {"book": book})
